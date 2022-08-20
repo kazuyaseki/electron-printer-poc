@@ -6,10 +6,18 @@ import styles from 'styles/app.module.scss'
 
 const App: React.FC = () => {
   const [count, setCount] = useState(0)
+  const fetchPrinters = () => {
+    window.electronAPI.fetchPrinters();
+
+    window.electronAPI.on("printers", (event: any, printers: any) => {
+      console.log(event, printers);
+    });
+  };
 
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
+        <button onClick={fetchPrinters}>プリンター情報取得</button>
         <div className={styles.logos}>
           <div className={styles.imgBox}>
             <img

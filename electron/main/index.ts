@@ -82,7 +82,12 @@ app.on('activate', () => {
     createWindow()
   }
 })
+async function fetchPrinters() {
+  console.log("printers");
+  win.webContents.send("printers", ["hoge"]);
+}
 
+ipcMain.handle("fetchPrinters", fetchPrinters);
 // new window example arg: new windows url
 ipcMain.handle('open-win', (event, arg) => {
   const childWindow = new BrowserWindow({

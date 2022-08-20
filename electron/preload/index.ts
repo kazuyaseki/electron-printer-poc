@@ -1,5 +1,14 @@
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise(resolve => {
+import { contextBridge, ipcRenderer } from "electron";
+
+export const electronAPIFunctions = {
+  fetchPrinters: () => ipcRenderer.invoke("fetchPrinters"),
+  on: (channel, callback) =>
+    ipcRenderer.on(channel, (event, argv) => callback(event, argv)),
+};
+
+contextBridge.exposeInMainWorld("electronAPI", electronAPIFunctions);
     if (condition.includes(document.readyState)) {
       resolve(true)
     } else {
