@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 
 export const electronAPIFunctions = {
   fetchPrinters: () => ipcRenderer.invoke("fetchPrinters"),
+  print: (deviceName: string) => ipcRenderer.invoke("print", deviceName),
   on: (channel, callback) =>
     ipcRenderer.on(channel, (event, argv) => callback(event, argv)),
 };
